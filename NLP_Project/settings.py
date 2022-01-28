@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-k(5bz#f^2(yqtr@=4hn12re@ny+nztl_#8dnk0dw$*!jt+is-&
 DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost',
-                 'https://twitteranalysisapptest.herokuapp.com/']
+                 'twitteranalysisapptest.herokuapp.com']
 
 
 # Application definition
