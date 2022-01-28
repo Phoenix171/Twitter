@@ -1,0 +1,49 @@
+{% extends "home.html" %}
+{% block content %}
+<div>
+  <h3 class="d-flex justify-content-lg-center">Tweet Analysis</h3>
+    <br/>
+    <div class="text-center">
+    <h5>Total Tweet Count is {{total_count}}</h5>  
+    <h5>Positive Tweet Count is {{positive_count}} and Percentage is {{positive_count_perc}}</h5>
+    <h5>Negative Tweet Count is {{negative_count}} and Percentage is {{negative_count_perc}} </h5>
+    <h5>Neutral Tweet Count is {{neutral_count}} and Percentage is {{neutral_count_perc}}</h5>
+    </div>  
+    {% if positive_tweets %}
+    <table class="table table-hover">
+        <tr  class="table-default" >
+          <th scope="col">POSITIVE TWEETS</th>
+        </tr>       
+        {% for tweet in positive_tweets %}
+        <tr  class="table-default">
+        <td>{{ tweet.text | truncatechars:250 }}</td>
+        </tr>  
+        {% endfor %}
+    </table> 
+    {% endif %}    
+    {% if negative_tweets %}
+    <table class="table table-hover">
+      <tr  class="table-default" >
+      <th scope="col">NEGATIVE TWEETS</th>
+    </tr>       
+    {% for tweet in negative_tweets %}
+    <tr  class="table-default">
+    <td>{{ tweet.text | truncatechars:250 }}</td>
+    </tr>  
+    {% endfor %}
+    </table>
+    {% endif %}   
+        {% if neutral_tweets %}
+        <table class="table table-hover">
+          <tr  class="table-default" >
+            <th scope="col">NEUTRAL TWEETS</th>
+          </tr>       
+          {% for tweet in neutral_tweets %}
+          <tr  class="table-default">
+          <td>{{ tweet.text | truncatechars:250 }}</td>
+          </tr>  
+          {% endfor %}    
+          {% endif %}  
+        </table>
+</div>
+{% endblock %}

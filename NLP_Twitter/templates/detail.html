@@ -1,0 +1,34 @@
+{% extends "home.html" %}
+{% block content %}
+<div>
+  <h3 class="d-flex justify-content-lg-center">Tweets collected with Topic {{topic}} are as below</h3>
+  <br />
+    <form action="{% url 'analyze' topic.id %}" method="post" class="d-flex justify-content-lg-center">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Analyze Tweets</button>
+      </form>
+    <br/>
+    {% if topic.tweets.all %}
+    <table class="table table-hover">
+        <tr  class="table-default" >
+          <th scope="col">Tweet ID</th>
+          <th scope="col">Tweet Topic</th>
+          <th scope="col">Author</th>
+          <th scope="col">Tweet Body</th>
+          <th scope="col">Polarity Index</th>
+          <th scope="col">Created On</th>
+        </tr>
+        {% for tweet in topic.tweets.all %}
+        <tr  class="table-default">
+        <td>{{ tweet.id}}</td>
+        <td>{{ tweet.topic}}</td>
+        <td>{{ tweet.author |truncatechars:15}}</td>
+        <td>{{ tweet.text | truncatechars:70 }}</td>
+        <td>{{ tweet.polarity_index }}</td>
+        <td>{{ tweet.creation_date }}</td>
+        </tr>   
+        {% endfor %}
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
