@@ -37,7 +37,7 @@
             </tr>       
             {% for tweet in positive_tweets %}
             <tr  class="table-default">
-            <td>{{ tweet.text | truncatechars:250 }}</td>
+            <td>{{ tweet.raw_text | truncatechars:250 }}</td>
             </tr>  
             {% endfor %}
         </table> 
@@ -51,7 +51,7 @@
         </tr>       
         {% for tweet in negative_tweets %}
         <tr  class="table-default">
-        <td>{{ tweet.text | truncatechars:250 }}</td>
+        <td>{{ tweet.raw_text | truncatechars:250 }}</td>
         </tr>  
         {% endfor %}
         </table>
@@ -64,7 +64,7 @@
           </tr>       
           {% for tweet in neutral_tweets %}
           <tr  class="table-default">
-          <td>{{ tweet.text | truncatechars:250 }}</td>
+          <td>{{ tweet.raw_text | truncatechars:250 }}</td>
           </tr>  
           {% endfor %}     
         </table>
