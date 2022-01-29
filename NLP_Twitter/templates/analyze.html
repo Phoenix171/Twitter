@@ -12,11 +12,9 @@
 
     <div  class="d-flex justify-content-lg-center">
       <form action="{% url 'detail' pk %}"  class="d-inline-block">
-        {% csrf_token %}
         <button type="submit" class="btn btn-primary" class="d-inline-block" style="margin-right: 1em;">Go Back</button>
       </form>
           <form action="{% url 'home' %}" method="get" class="d-inline-block">
-            {% csrf_token %}
             <button type="submit" class="btn btn-primary d-inline-block">Search for Another topic</button>
           </form>
         <br/>

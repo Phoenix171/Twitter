@@ -83,9 +83,13 @@ def detail(request, pk):
                 fetch_and_save_tweets_from_api(text, topic.id)
                 # tweets = Topic.tweets.get(topic=topic)
             return render(request, 'detail.html', {'topic': topic, 'pk': topic.id})
-    else:
-        topic = Topic.objects.get(id=pk)
-        return render(request, 'detail.html', {'topic': topic})
+    elif request.method == "GET":
+        try:
+            topic = Topic.objects.get(id=pk)
+            return render(request, 'detail.html', {'topic': topic})
+        except Topic.DoesNotExist:
+            form = TopicForm()
+            return render(request, 'home.html',  {'form': form})
 
 
 def analyze(request, pk):
