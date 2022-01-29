@@ -5,42 +5,60 @@
     <br/>
     <div class="text-center">
     <h5>Total Tweet Count is {{total_count}}</h5>  
-    <h5>Positive Tweet Count is {{positive_count}} and Percentage is {{positive_count_perc}}</h5>
-    <h5>Negative Tweet Count is {{negative_count}} and Percentage is {{negative_count_perc}} </h5>
-    <h5>Neutral Tweet Count is {{neutral_count}} and Percentage is {{neutral_count_perc}}</h5>
+    <h6>Positive Tweet Count is {{positive_count}} and Percentage is {{positive_count_perc}}</h6>
+    <h6>Negative Tweet Count is {{negative_count}} and Percentage is {{negative_count_perc}} </h6>
+    <h6>Neutral Tweet Count is {{neutral_count}} and Percentage is {{neutral_count_perc}}</h6>
     </div>  
-    <form action="{% url 'home' %}" method="get" class="d-inline-block">
+
+    <div  class="d-flex justify-content-lg-center">
+      <form action="{% url 'detail' pk %}"  class="d-inline-block">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary" class="d-inline-block" style="margin-right: 1em;">Go Back</button>
+      </form>
+          <form action="{% url 'home' %}" method="get" class="d-inline-block">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary d-inline-block">Search for Another topic</button>
+          </form>
+        <br/>
+        <br/>
+    </div>
+    <!-- <form action="{% url 'home' %}" method="get" class="d-inline-block">
       {% csrf_token %}
       <button type="submit" class="btn btn-primary" class="d-inline-block" style="margin-right: 1em;">Go Back</button>
     </form>
     <form action="{% url 'home' %}" method="get" class="d-flex justify-content-lg-center">
       <button type="submit" class="btn btn-primary">Search for Another topic</button>
-    </form>
-    
-    {% if positive_tweets %}
-    <table class="table table-hover">
-        <tr  class="table-default" >
-          <th scope="col">POSITIVE TWEETS</th>
+    </form> -->
+
+    <div class="row">
+      <div class="col-sm-4">
+        {% if positive_tweets %}
+        <table class="table table-hover">
+            <tr  class="table-default" >
+              <th scope="col" style=" min-width: 100px">POSITIVE TWEETS</th>
+            </tr>       
+            {% for tweet in positive_tweets %}
+            <tr  class="table-default">
+            <td>{{ tweet.text | truncatechars:250 }}</td>
+            </tr>  
+            {% endfor %}
+        </table> 
+        {% endif %} 
+      </div>
+      <div class="col-sm-4">
+        {% if negative_tweets %}
+        <table class="table table-hover col-lg-6">
+          <tr  class="table-default" >
+          <th scope="col">NEGATIVE TWEETS</th>
         </tr>       
-        {% for tweet in positive_tweets %}
+        {% for tweet in negative_tweets %}
         <tr  class="table-default">
         <td>{{ tweet.text | truncatechars:250 }}</td>
         </tr>  
         {% endfor %}
-    </table> 
-    {% endif %}    
-    {% if negative_tweets %}
-    <table class="table table-hover">
-      <tr  class="table-default" >
-      <th scope="col">NEGATIVE TWEETS</th>
-    </tr>       
-    {% for tweet in negative_tweets %}
-    <tr  class="table-default">
-    <td>{{ tweet.text | truncatechars:250 }}</td>
-    </tr>  
-    {% endfor %}
-    </table>
-    {% endif %}   
+        </table>
+        {% endif %}</div>
+      <div class="col-sm-4">
         {% if neutral_tweets %}
         <table class="table table-hover">
           <tr  class="table-default" >
@@ -50,8 +68,10 @@
           <tr  class="table-default">
           <td>{{ tweet.text | truncatechars:250 }}</td>
           </tr>  
-          {% endfor %}    
-          {% endif %}  
+          {% endfor %}     
         </table>
+        {% endif %}
+      </div>
+    </div> 
 </div>
 {% endblock %}

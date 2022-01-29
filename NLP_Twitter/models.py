@@ -15,6 +15,7 @@ class Tweet(models.Model):
         Topic, on_delete=models.SET_NULL, null=True, related_name='tweets')
     author = models.CharField(max_length=50)
     text = models.CharField(max_length=500)
+    raw_text = models.CharField(max_length=500, default="")
     creation_date = models.DateTimeField()
     polarity = models.CharField(max_length=12, default="")
     polarity_index = models.DecimalField(

@@ -9,12 +9,12 @@
   <style>
     input[type=text]{
   width: 100%;
-  padding: 12px 20px;
+  padding: 12px 40px;
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 body {
  background-image: url("paper.gif");
@@ -31,13 +31,15 @@ label{color: black;font-weight: 500;}
     {{ form.as_p }}
     <input name="submit" type="submit" value="Fetch Tweets">
 </form> -->
+
 {% block content %}
-<form action="{% url 'home' %}" method="post" class="d-flex justify-content-lg-center">
+<form action="{% url 'detail' 0 %}" method="post" class="d-flex justify-content-lg-center">
   {% csrf_token %}
   <div class="form-group row">
-    <div class="col-md-10">    
-      <h2 class="d-flex justify-content-lg-center">Welcome User</h2>  
-      <h4>Go Ahead and Analyze Tweets</h4>
+    <div class="col-md-10"> 
+      <h6 class="d-flex justify-content: center;">Application for Tweet Analysis</h6>
+      <br />
+      <h6>Go Ahead and Analyze Tweets</h6>
       {{ form }}
       <button type="submit" class="btn btn-primary">Fetch Tweets</button>
     </div>

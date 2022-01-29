@@ -38,9 +38,10 @@ def fetch_and_save_tweets_from_api(search, pk):
     for tweet in tweets.items(100):
         tweet_id = tweet.id
         status = api.get_status(tweet_id, tweet_mode='extended')
-        raw_text = status.full_text.lower()
+        raw_text = status.full_text
+        raw_text_lower = status.full_text.lower()
         text = re.sub(
-            r"(@\[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)|^rt|http.+?", "", raw_text)
+            r"(@\[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)|^rt|http.+?", "", raw_text_lower)
 
         final_text = " ".join(
             [word for word in text.split() if word not in (stop)])
@@ -51,14 +52,20 @@ def fetch_and_save_tweets_from_api(search, pk):
         polarity = "NEUTRAL" if polarity_index == 0 else "POSITIVE" if polarity_index > 0 else "NEGATIVE"
         polarity_index = round(polarity_index, 4)
         Tweet.objects.create(
-            topic=topic, author=tweet.user.name, text=final_text, creation_date=tweet.created_at, polarity=polarity, polarity_index=polarity_index)
+            topic=topic, author=tweet.user.name, raw_text=raw_text, text=final_text, creation_date=tweet.created_at, polarity=polarity, polarity_index=polarity_index)
 
     print(count)
     print(type(tweets))
 
 
-@api_view(['GET', 'POST'])
 def home(request):
+    if request.method == "GET":
+        form = TopicForm()
+        return render(request, 'home.html', {'form': form})
+
+
+@api_view(['GET', 'POST'])
+def detail(request, pk):
     if request.method == "POST":
         filled_form = TopicForm(request.POST)
         if filled_form.is_valid():
@@ -75,10 +82,10 @@ def home(request):
                 print(type(topic), topic)
                 fetch_and_save_tweets_from_api(text, topic.id)
                 # tweets = Topic.tweets.get(topic=topic)
-            return render(request, 'detail.html', {'topic': topic})
-    if request.method == "GET":
-        form = TopicForm()
-        return render(request, 'home.html', {'form': form})
+            return render(request, 'detail.html', {'topic': topic, 'pk': topic.id})
+    else:
+        topic = Topic.objects.get(id=pk)
+        return render(request, 'detail.html', {'topic': topic})
 
 
 def analyze(request, pk):
@@ -97,7 +104,8 @@ def analyze(request, pk):
     positive_count_perc = round((positive_count/total_count)*100, 2)
     negative_count_perc = round((negative_count/total_count)*100, 2)
     neutral_count_perc = round((neutral_count/total_count)*100, 2)
-    return render(request, 'analyze.html', {'positive_tweets': positive_tweets,
+    return render(request, 'analyze.html', {'pk': pk,
+                                            'positive_tweets': positive_tweets,
                                             "negative_tweets": negative_tweets,
                                             "neutral_tweets": neutral_tweets,
                                             'positive_count': positive_count,
