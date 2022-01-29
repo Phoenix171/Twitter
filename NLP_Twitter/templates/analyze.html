@@ -9,6 +9,14 @@
     <h5>Negative Tweet Count is {{negative_count}} and Percentage is {{negative_count_perc}} </h5>
     <h5>Neutral Tweet Count is {{neutral_count}} and Percentage is {{neutral_count_perc}}</h5>
     </div>  
+    <form action="{% url 'home' %}" method="get" class="d-inline-block">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary" class="d-inline-block" style="margin-right: 1em;">Go Back</button>
+    </form>
+    <form action="{% url 'home' %}" method="get" class="d-flex justify-content-lg-center">
+      <button type="submit" class="btn btn-primary">Search for Another topic</button>
+    </form>
+    
     {% if positive_tweets %}
     <table class="table table-hover">
         <tr  class="table-default" >

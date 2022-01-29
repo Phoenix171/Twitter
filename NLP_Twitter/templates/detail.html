@@ -3,11 +3,19 @@
 <div>
   <h3 class="d-flex justify-content-lg-center">Tweets collected with Topic {{topic}} are as below</h3>
   <br />
-    <form action="{% url 'analyze' topic.id %}" method="post" class="d-flex justify-content-lg-center">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Analyze Tweets</button>
-      </form>
-    <br/>
+  <div  class="d-flex justify-content-lg-center">
+    <form action="{% url 'home' %}" method="get" class="d-inline-block">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary" class="d-inline-block" style="margin-right: 1em;">Go Back</button>
+    </form>
+        <form action="{% url 'analyze' topic.id %}" method="get" class="d-inline-block">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary d-inline-block">Analyze Tweets</button>
+        </form>
+      <br/>
+      <br/>
+  </div>
+
     {% if topic.tweets.all %}
     <table class="table table-hover">
         <tr  class="table-default" >
@@ -15,7 +23,7 @@
           <th scope="col">Tweet Topic</th>
           <th scope="col">Author</th>
           <th scope="col">Tweet Body</th>
-          <th scope="col">Polarity Index</th>
+          <th scope="col">Polarity</th>
           <th scope="col">Created On</th>
         </tr>
         {% for tweet in topic.tweets.all %}
@@ -24,7 +32,7 @@
         <td>{{ tweet.topic}}</td>
         <td>{{ tweet.author |truncatechars:15}}</td>
         <td>{{ tweet.text | truncatechars:70 }}</td>
-        <td>{{ tweet.polarity_index }}</td>
+        <td>{{ tweet.polarity }}</td>
         <td>{{ tweet.creation_date }}</td>
         </tr>   
         {% endfor %}
