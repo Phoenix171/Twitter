@@ -89,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'proshopdb',
         'USER': 'postgres',
-        'PASSWORD': "postgres12",
+        'PASSWORD': os.environ.get('AWS_SECRET_ACCESS_KEY'),
         'HOST': 'database-1.cvo2lopxuvet.us-west-1.rds.amazonaws.com',
         'PORT': '5432'
     }
