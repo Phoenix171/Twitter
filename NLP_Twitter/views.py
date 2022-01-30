@@ -23,22 +23,9 @@ twitter_keys = {
     'access_token_key': os.environ.get('ACCESS_TOKEN'),
     'access_token_secret': os.environ.get('ACCESS_TOKEN_SECRET')
 }
-# api_key = "wOvdtRA6dk1jV7Py93gsZJWgQ"
-# api_key_secret = "dBlpmjSNzSqEUscFZFGl4ttQju8chlfhXLE1zKHH9xRJ4JzBw8"
-# access_key = "1486357430653308930-SuODORFypcLd7XyAwx8jU97sbcmYx2"
-# access_token_secret = "e1PHgDb2fZKUL7kuh67R4LBltJBw24z2ubgGuBQ4CNCDx"
-
-# api_key = "wOvdtRA6dk1jV7Py93gsZJWgQ"
-# api_key_secret = "dBlpmjSNzSqEUscFZFGl4ttQju8chlfhXLE1zKHH9xRJ4JzBw8"
-# access_key = "1486357430653308930-SuODORFypcLd7XyAwx8jU97sbcmYx2"
-# access_token_secret = "e1PHgDb2fZKUL7kuh67R4LBltJBw24z2ubgGuBQ4CNCDx"
-search_words = "#OMICRON"
-date_since = "2022-01-01"
-# search_words = "OMICRON"
 
 
 def fetch_and_save_tweets_from_api(search, pk):
-    print("Entered function")
     auth = tweepy.OAuthHandler(
         twitter_keys['consumer_key'], twitter_keys['consumer_secret'])
     auth.set_access_token(
@@ -47,7 +34,7 @@ def fetch_and_save_tweets_from_api(search, pk):
     tweets = tweepy.Cursor(api.search_30_day,
                            label="develop",
                            query=search)
-    count = 0
+
     topic = Topic.objects.get(id=pk)
     for tweet in tweets.items(100):
         tweet_id = tweet.id
@@ -62,14 +49,12 @@ def fetch_and_save_tweets_from_api(search, pk):
         # Processing Text Data
 
         polarity_index = TextBlob(final_text).sentiment.polarity
-        # 1 if A else 2 if B else 3
+
         polarity = "NEUTRAL" if polarity_index == 0 else "POSITIVE" if polarity_index > 0 else "NEGATIVE"
+
         polarity_index = round(polarity_index, 4)
         Tweet.objects.create(
             topic=topic, author=tweet.user.name, raw_text=raw_text, text=final_text, creation_date=tweet.created_at, polarity=polarity, polarity_index=polarity_index)
-
-    print(count)
-    print(type(tweets))
 
 
 def home(request):
