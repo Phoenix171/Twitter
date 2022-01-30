@@ -12,14 +12,26 @@ import re
 import nltk
 from nltk.corpus import stopwords
 from textblob import TextBlob
-
+import os
 nltk.download('stopwords')
 stop = stopwords.words('english')
 
-api_key = "wOvdtRA6dk1jV7Py93gsZJWgQ"
-api_key_secret = "dBlpmjSNzSqEUscFZFGl4ttQju8chlfhXLE1zKHH9xRJ4JzBw8"
-access_key = "1486357430653308930-SuODORFypcLd7XyAwx8jU97sbcmYx2"
-access_token_secret = "e1PHgDb2fZKUL7kuh67R4LBltJBw24z2ubgGuBQ4CNCDx"
+
+twitter_keys = {
+    'consumer_key': os.environ.get('API_KEY'),
+    'consumer_secret': os.environ.get('API_KEY_SECRET'),
+    'access_token_key': os.environ.get('ACCESS_TOKEN'),
+    'access_token_secret': os.environ.get('ACCESS_TOKEN_SECRET')
+}
+# api_key = "wOvdtRA6dk1jV7Py93gsZJWgQ"
+# api_key_secret = "dBlpmjSNzSqEUscFZFGl4ttQju8chlfhXLE1zKHH9xRJ4JzBw8"
+# access_key = "1486357430653308930-SuODORFypcLd7XyAwx8jU97sbcmYx2"
+# access_token_secret = "e1PHgDb2fZKUL7kuh67R4LBltJBw24z2ubgGuBQ4CNCDx"
+
+# api_key = "wOvdtRA6dk1jV7Py93gsZJWgQ"
+# api_key_secret = "dBlpmjSNzSqEUscFZFGl4ttQju8chlfhXLE1zKHH9xRJ4JzBw8"
+# access_key = "1486357430653308930-SuODORFypcLd7XyAwx8jU97sbcmYx2"
+# access_token_secret = "e1PHgDb2fZKUL7kuh67R4LBltJBw24z2ubgGuBQ4CNCDx"
 search_words = "#OMICRON"
 date_since = "2022-01-01"
 # search_words = "OMICRON"
@@ -27,8 +39,10 @@ date_since = "2022-01-01"
 
 def fetch_and_save_tweets_from_api(search, pk):
     print("Entered function")
-    auth = tweepy.OAuthHandler(api_key, api_key_secret)
-    auth.set_access_token(access_key, access_token_secret)
+    auth = tweepy.OAuthHandler(
+        twitter_keys['consumer_key'], twitter_keys['consumer_secret'])
+    auth.set_access_token(
+        twitter_keys['access_token_key'], twitter_keys['access_token_secret'])
     api = tweepy.API(auth)
     tweets = tweepy.Cursor(api.search_30_day,
                            label="develop",
