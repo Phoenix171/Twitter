@@ -29,11 +29,11 @@
     </form> -->
 
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col">
         {% if positive_tweets %}
         <table class="table table-hover">
             <tr  class="table-default" >
-              <th scope="col" style=" min-width: 100px">POSITIVE TWEETS</th>
+              <th style=" min-width: 100px">POSITIVE TWEETS</th>
             </tr>       
             {% for tweet in positive_tweets %}
             <tr  class="table-default">
@@ -43,11 +43,11 @@
         </table> 
         {% endif %} 
       </div>
-      <div class="col-sm-4">
+      <div class="col">
         {% if negative_tweets %}
-        <table class="table table-hover col-lg-6">
+        <table class="table table-hover">
           <tr  class="table-default" >
-          <th scope="col">NEGATIVE TWEETS</th>
+          <th>NEGATIVE TWEETS</th>
         </tr>       
         {% for tweet in negative_tweets %}
         <tr  class="table-default">
@@ -56,13 +56,41 @@
         {% endfor %}
         </table>
         {% endif %}</div>
-      <div class="col-sm-4">
+      <div class="col">
         {% if neutral_tweets %}
         <table class="table table-hover">
           <tr  class="table-default" >
-            <th scope="col">NEUTRAL TWEETS</th>
+            <th >NEUTRAL TWEETS</th>
           </tr>       
           {% for tweet in neutral_tweets %}
+          <tr  class="table-default">
+          <td>{{ tweet.raw_text | truncatechars:250 }}</td>
+          </tr>  
+          {% endfor %}     
+        </table>
+        {% endif %}
+      </div>
+      <div class="col">
+        {% if top_five_pos_tweets %}
+        <table class="table table-hover">
+          <tr  class="table-default" >
+            <th >TOP 5 '+' TWEETS</th>
+          </tr>       
+          {% for tweet in top_five_pos_tweets %}
+          <tr  class="table-default">
+          <td>{{ tweet.raw_text | truncatechars:250 }}</td>
+          </tr>  
+          {% endfor %}     
+        </table>
+        {% endif %}
+      </div>
+      <div class="col">
+        {% if top_five_neg_tweets %}
+        <table class="table table-hover">
+          <tr  class="table-default" >
+            <th >TOP 5 '-' TWEETS</th>
+          </tr>       
+          {% for tweet in top_five_neg_tweets %}
           <tr  class="table-default">
           <td>{{ tweet.raw_text | truncatechars:250 }}</td>
           </tr>  

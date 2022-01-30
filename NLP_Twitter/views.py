@@ -108,6 +108,10 @@ def analyze(request, pk):
     positive_count_perc = round((positive_count/total_count)*100, 2)
     negative_count_perc = round((negative_count/total_count)*100, 2)
     neutral_count_perc = round((neutral_count/total_count)*100, 2)
+    top_five_pos_tweets = Topic.objects.get(
+        id=pk).tweets.all().filter(polarity="POSITIVE").order_by("-polarity_index")[0:5]
+    top_five_neg_tweets = Topic.objects.get(
+        id=pk).tweets.all().filter(polarity="NEGATIVE").order_by("polarity_index")[0:5]
     return render(request, 'analyze.html', {'pk': pk,
                                             'positive_tweets': positive_tweets,
                                             "negative_tweets": negative_tweets,
@@ -118,5 +122,7 @@ def analyze(request, pk):
                                             'total_count': total_count,
                                             'positive_count_perc': positive_count_perc,
                                             'negative_count_perc': negative_count_perc,
-                                            'neutral_count_perc': neutral_count_perc
+                                            'neutral_count_perc': neutral_count_perc,
+                                            'top_five_pos_tweets': top_five_pos_tweets,
+                                            'top_five_neg_tweets': top_five_neg_tweets
                                             })

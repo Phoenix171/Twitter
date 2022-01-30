@@ -14,25 +14,27 @@
       <br/>
   </div>
 
-    {% if topic.tweets.all %}
-    <table class="table table-hover">
-        <tr  class="table-default" >
-          <th scope="col-lg-1">ID</th>
-          <th scope="col-lg-4">Raw Tweet</th>
-          <th scope="col-lg-4">Cleaned Tweet</th>
-          <th scope="col-lg-2">Polarity</th>
-          <th scope="col-lg-1">Created On</th>
-        </tr>
-        {% for tweet in topic.tweets.all %}
-        <tr  class="table-default">
-        <td>{{ tweet.id}}</td>
-        <td>{{ tweet.raw_text }}</td>
-        <td>{{ tweet.text }}</td>
-        <td>{{ tweet.polarity }}</td>
-        <td>{{ tweet.creation_date }}</td>
-        </tr>   
-        {% endfor %}
-        </table>
-    {% endif %}
+  {% if topic.tweets.all %}
+  <table class="table table-hover">
+      <tr  class="table-default" >
+        <th scope="col">Tweet ID</th>
+        <th scope="col">Raw Tweet</th>
+        <th scope="col">Cleaned Tweet</th>
+        <th scope="col">Polarity</th>
+        <th scope="col">Polarity Index</th>
+        <th scope="col">Created On</th>
+      </tr>
+      {% for tweet in topic.tweets.all %}
+      <tr  class="table-default">
+      <td>{{ tweet.id}}</td>
+      <td>{{ tweet.raw_text| truncatechars:70 }}</td>
+      <td>{{ tweet.text | truncatechars:70 }}</td>
+      <td>{{ tweet.polarity }}</td>
+      <td>{{ tweet.polarity_index }}</td>
+      <td>{{ tweet.creation_date }}</td>
+      </tr>   
+      {% endfor %}
+      </table>
+  {% endif %}
 </div>
 {% endblock %}
