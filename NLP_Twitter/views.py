@@ -17,11 +17,18 @@ nltk.download('stopwords')
 stop = stopwords.words('english')
 
 
+# twitter_keys = {
+#     'consumer_key': os.environ.get('API_KEY'),
+#     'consumer_secret': os.environ.get('API_KEY_SECRET'),
+#     'access_token_key': os.environ.get('ACCESS_TOKEN'),
+#     'access_token_secret': os.environ.get('ACCESS_TOKEN_SECRET')
+# }
+
 twitter_keys = {
-    'consumer_key': os.environ.get('API_KEY'),
-    'consumer_secret': os.environ.get('API_KEY_SECRET'),
-    'access_token_key': os.environ.get('ACCESS_TOKEN'),
-    'access_token_secret': os.environ.get('ACCESS_TOKEN_SECRET')
+    'consumer_key': 'wOvdtRA6dk1jV7Py93gsZJWgQ',
+    'consumer_secret': 'dBlpmjSNzSqEUscFZFGl4ttQju8chlfhXLE1zKHH9xRJ4JzBw8',
+    'access_token_key': '1486357430653308930-SuODORFypcLd7XyAwx8jU97sbcmYx2',
+    'access_token_secret': 'e1PHgDb2fZKUL7kuh67R4LBltJBw24z2ubgGuBQ4CNCDx'
 }
 
 
@@ -42,7 +49,7 @@ def fetch_and_save_tweets_from_api(search, pk):
         raw_text = status.full_text
         raw_text_lower = status.full_text.lower()
         text = re.sub(
-            r"(@[A-Za-z0-9]+) | (#[A-Za-z0-9]+) |([^0-9A-Za-z \t])|(\w+:\/\/\S+)|^rt|", "", raw_text_lower)
+            r"(@[A-Za-z0-9:_]+) | (#[A-Za-z0-9]+) |([^0-9A-Za-z \t])|(\w+:\/\/\S+)|^rt|", "", raw_text_lower)
 
         final_text = " ".join(
             [word for word in text.split() if word not in (stop)])
