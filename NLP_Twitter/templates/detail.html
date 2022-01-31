@@ -1,40 +1,58 @@
-{% extends "home.html" %}
-{% block content %}
-<div>
-  <h3 class="d-flex justify-content-lg-center">Tweets collected with Topic {{topic}} are as below</h3>
-  <br />
-  <div  class="d-flex justify-content-lg-center">
-    <form action="{% url 'home' %}" method="get" class="d-inline-block">
-      <button type="submit" class="btn btn-primary" class="d-inline-block" style="margin-right: 1em;">Go Back</button>
-    </form>
-        <form action="{% url 'analyze' topic.id %}" method="get" class="d-inline-block">
-          <button type="submit" class="btn btn-primary d-inline-block">Analyze Tweets</button>
-        </form>
-      <br/>
-      <br/>
-  </div>
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Twitter Analysis</title>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+  <div>
+    <h6 class="d-flex justify-content-lg-center">Tweets collected with Topic {{topic}} are as below</h6>
+    <div  class="d-flex justify-content-lg-center">
+      <form action="{% url 'home' %}" method="get" class="d-inline-block">
+        <button type="submit" class="btn btn-primary" class="d-inline-block" style="margin-right: 1em;">Go Back</button>
+      </form>
+      <form action="{% url 'analyze' topic.id %}" method="get" class="d-inline-block">
+        <button type="submit" class="btn btn-primary d-inline-block">Analyze Tweets</button>
+      </form>
+    </div>
+	<table id="tableID" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th>TweetID</th>
+          <th>RawTweet</th>
+          <th>CleanedTweet</th>
+          <th>Polarity</th>
+          <th>PolarityIndex</th>
+          <th>CreatedOn</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tweet in topic.tweets.all %}
+        <tr>
+        <td>{{ tweet.id}}</td>
+        <td>{{ tweet.raw_text| truncatechars:280 }}</td>
+        <td>{{ tweet.text | truncatechars:280 }}</td>
+        <td>{{ tweet.polarity }}</td>
+        <td>{{ tweet.polarity_index }}</td>
+        <td>{{ tweet.creation_date }}</td>
+        </tr>   
+        {% endfor %}
+      </tbody>
+	</table>
 
-  {% if topic.tweets.all %}
-  <table class="table table-hover">
-      <tr  class="table-default" >
-        <th scope="col">Tweet ID</th>
-        <th scope="col">Raw Tweet</th>
-        <th scope="col">Cleaned Tweet</th>
-        <th scope="col">Polarity</th>
-        <th scope="col">Polarity Index</th>
-        <th scope="col">Created On</th>
-      </tr>
-      {% for tweet in topic.tweets.all %}
-      <tr  class="table-default">
-      <td>{{ tweet.id}}</td>
-      <td>{{ tweet.raw_text| truncatechars:280 }}</td>
-      <td>{{ tweet.text | truncatechars:280 }}</td>
-      <td>{{ tweet.polarity }}</td>
-      <td>{{ tweet.polarity_index }}</td>
-      <td>{{ tweet.creation_date }}</td>
-      </tr>   
-      {% endfor %}
-      </table>
-  {% endif %}
-</div>
-{% endblock %}
+
+  <script>
+
+    /* Initialization of datatable */
+    $(document).ready(function() {
+      $('#tableID').DataTable({ });
+    });
+  </script>
+</body>
+</html>
