@@ -27,8 +27,8 @@
       {% for tweet in topic.tweets.all %}
       <tr  class="table-default">
       <td>{{ tweet.id}}</td>
-      <td>{{ tweet.raw_text| truncatechars:70 }}</td>
-      <td>{{ tweet.text | truncatechars:70 }}</td>
+      <td>{{ tweet.raw_text| truncatechars:280 }}</td>
+      <td>{{ tweet.text | truncatechars:280 }}</td>
       <td>{{ tweet.polarity }}</td>
       <td>{{ tweet.polarity_index }}</td>
       <td>{{ tweet.creation_date }}</td>
