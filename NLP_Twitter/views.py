@@ -1,4 +1,3 @@
-from typing import final
 from nltk.corpus import stopwords
 from django.shortcuts import render
 from tweepy import OAuthHandler, API, Cursor
@@ -48,9 +47,8 @@ def fetch_and_save_tweets_from_api(search, pk):
         final_text = " ".join(
             [word for word in text.split() if word not in (stop)])
         # Processing Text Data
-        final_text = TextBlob(final_text).correct()
-        print(final_text)
-        polarity_index = TextBlob(str(final_text)).sentiment.polarity
+
+        polarity_index = TextBlob(final_text).sentiment.polarity
 
         polarity = "NEUTRAL" if polarity_index == 0 else "POSITIVE" if polarity_index > 0 else "NEGATIVE"
 
