@@ -47,7 +47,7 @@ def fetch_and_save_tweets_from_api(search, pk):
         final_text = " ".join(
             [word for word in text.split() if word not in (stop)])
         # Processing Text Data
-
+        final_text = str(TextBlob(final_text).correct())
         polarity_index = TextBlob(final_text).sentiment.polarity
 
         polarity = "NEUTRAL" if polarity_index == 0 else "POSITIVE" if polarity_index > 0 else "NEGATIVE"
