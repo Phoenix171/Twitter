@@ -49,7 +49,7 @@ def fetch_and_save_tweets_from_api(search, pk):
         raw_text = status.full_text
         raw_text_lower = status.full_text.lower()
         text = re.sub(
-            r"(@[A-Za-z0-9:_]+) | (#[A-Za-z0-9]+) |([^0-9A-Za-z \t])|(\w+:\/\/\S+)|^rt|", "", raw_text_lower)
+            r"(@[A-Za-z0-9:_]+)|(#[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)|^rt|", "", raw_text_lower)
 
         final_text = " ".join(
             [word for word in text.split() if word not in (stop)])
