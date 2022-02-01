@@ -17,18 +17,11 @@ nltk.download('stopwords')
 stop = stopwords.words('english')
 
 
-# twitter_keys = {
-#     'consumer_key': os.environ.get('API_KEY'),
-#     'consumer_secret': os.environ.get('API_KEY_SECRET'),
-#     'access_token_key': os.environ.get('ACCESS_TOKEN'),
-#     'access_token_secret': os.environ.get('ACCESS_TOKEN_SECRET')
-# }
-
 twitter_keys = {
-    'consumer_key': 'wOvdtRA6dk1jV7Py93gsZJWgQ',
-    'consumer_secret': 'dBlpmjSNzSqEUscFZFGl4ttQju8chlfhXLE1zKHH9xRJ4JzBw8',
-    'access_token_key': '1486357430653308930-SuODORFypcLd7XyAwx8jU97sbcmYx2',
-    'access_token_secret': 'e1PHgDb2fZKUL7kuh67R4LBltJBw24z2ubgGuBQ4CNCDx'
+    'consumer_key': os.environ.get('API_KEY'),
+    'consumer_secret': os.environ.get('API_KEY_SECRET'),
+    'access_token_key': os.environ.get('ACCESS_TOKEN'),
+    'access_token_secret': os.environ.get('ACCESS_TOKEN_SECRET')
 }
 
 
